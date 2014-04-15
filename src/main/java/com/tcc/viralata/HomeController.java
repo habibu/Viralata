@@ -1,5 +1,10 @@
 package com.tcc.viralata;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -39,7 +44,23 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model, HttpSession httpSession) {
+	public String login(String login, String senha) throws ClassNotFoundException {
+		Class.forName("org.sqlite.JDBC");
+		try {
+			Connection con = DriverManager.getConnection("jdbc:sqlite:viralata.db");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM usuario where Login="+login+" AND Senha="+senha);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e);
+		}
+		
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String verificaLogin(Locale locale, Model model, HttpSession httpSession) {
+		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -48,12 +69,6 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		
-		return "login";
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String verificaLogin(String login, String senha) {
 		
 		return "login";
 	}
