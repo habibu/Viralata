@@ -45,9 +45,9 @@ public class HomeController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(String login, String senha) throws ClassNotFoundException {
-		Class.forName("org.sqlite.JDBC");
+		Class.forName("org.postgresql.Driver");
 		try {
-			Connection con = DriverManager.getConnection("jdbc:sqlite:viralata.db", "rodrigomuniz", "");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/viralata", "rodrigomuniz", "");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM usuario where Login="+login+" AND Senha="+senha);
 		} catch (SQLException e) {
