@@ -2,7 +2,9 @@ package com.tcc.viralata.model;
 
 import java.util.Date;
 
-public class Usuario {
+import org.springframework.stereotype.Component;
+
+public class Usuario extends Status {
 	
 	private String cpfCnpj;
 	private String nome;
@@ -11,6 +13,7 @@ public class Usuario {
 	private String rg;
 	private Date dataNascimento;
 	private Endereco endereco;
+	private String tpAcesso;
 	
 	public String getCpfCnpj() {
 		return cpfCnpj;
@@ -62,5 +65,13 @@ public class Usuario {
 	public Usuario alterarUsuario(Usuario usuario){
 		return usuario;
 	}
+	public String getTpAcesso() {
+		return tpAcesso;
+	}
+	public void setTpAcesso(String tpAcesso) {
+		this.tpAcesso = tpAcesso;
+	}
+	
+	
 
 }

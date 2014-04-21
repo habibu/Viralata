@@ -8,7 +8,7 @@
 <h1>
 	Área de Login 
 </h1>
-<form action="login" method="get">
+<form action="login" method="post">
 
 	<input type="text" id="login" name="login" placeholder="Usuário"/></br>
 	<input type="password" id="senha" name="senha" placeholder="Senha"/></br>
