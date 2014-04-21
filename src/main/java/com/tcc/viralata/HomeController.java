@@ -1,10 +1,5 @@
 package com.tcc.viralata;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -18,6 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tcc.viralata.dao.UsuarioDAO;
+import com.tcc.viralata.model.Usuario;
+import com.tcc.viralata.utils.ConstantsViraLata;
+
 /**
  * Handles requests for the application home page.
  */
@@ -29,7 +28,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -40,27 +39,11 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(String login, String senha) throws ClassNotFoundException {
-		Class.forName("org.postgresql.Driver");
-		try {
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/viralata", "rodrigomuniz", "");
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM usuario where Login="+login+" AND Senha="+senha);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e);
-		}
-		
 		return "login";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String verificaLogin(Locale locale, Model model, HttpSession httpSession) {
-		
+	@RequestMapping(value = "/dadosCadastraisAdoTela", method = RequestMethod.GET)
+	public String dadosCadastraisAdoTela(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -70,7 +53,56 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "login";
+		return "dadosCadastraisAdo";
 	}
+	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/cadastro", method = RequestMethod.GET)
+	public String cadastro(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "cadastro";
+	}
+	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/cadastro", method = RequestMethod.POST)
+	public String cadastro(String nome, String cpfCnpj, String rg, String email, String dataNasc, String bairro, String cep, String rua, String numero, String cidade, String estado, String tel, String cel) {
+		
+		System.out.println("Ok");
+		
+		
+		return "cadastro";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(String login, String senha) throws ClassNotFoundException {
+		try {
+			UsuarioDAO usuarioDao = new UsuarioDAO();
+			Usuario usuario = usuarioDao.login(Integer.valueOf(login), senha);
+			if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTpAcesso())){
+				return "homeAdm";
+			}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTpAcesso())){
+				return "homeAdo";
+			}
+		}catch(Exception e){
+			System.out.println("Erro no login");
+			return "login";
+		}
+		return "login";
+
+		
+	}
+	
 	
 }
