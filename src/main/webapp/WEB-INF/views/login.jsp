@@ -15,6 +15,9 @@
 	
 	<input type="submit" value="Enviar">
 </form>
+<form action="cadastro" methodo="post">
+	<input type="submit" value="Realizar Cadastro">
+</form>
 
 </body>
 </html>
