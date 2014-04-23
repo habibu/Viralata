@@ -1,6 +1,7 @@
 package com.tcc.viralata;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tcc.viralata.dao.UsuarioDAO;
 import com.tcc.viralata.model.Adotante;
+import com.tcc.viralata.model.Cidade;
 import com.tcc.viralata.model.Endereco;
 import com.tcc.viralata.model.Usuario;
 import com.tcc.viralata.utils.ConstantsViraLata;
@@ -82,34 +84,50 @@ public class HomeController {
 	@RequestMapping(value = "/cadastro", method = RequestMethod.POST)
 	public String cadastro(HttpServletRequest request) {
 		
-//		String nome = request.getParameter("nome");
-//		String cpfCnpj = request.getParameter("cpfCnpj");
-//		String rg = request.getParameter("rg");
-//		String email = request.getParameter("email");
-//		String dtNasc = request.getParameter("dtNasc");
-//		String tel = request.getParameter("tel");
-//		String bairro = request.getParameter("bairro");
-//		String cep = request.getParameter("cep");
-//		String rua = request.getParameter("rua");
-//		String numero = request.getParameter("numero");
-//		String cidade = request.getParameter("cidade");
-//		String estado = request.getParameter("estado");
+		String nome = request.getParameter("nome");
+		String cpfCnpj = request.getParameter("cpfCnpj");
+		String rg = request.getParameter("rg");
+		String email = request.getParameter("email");
+		String dtNasc = request.getParameter("dtNasc");
+		String tel = request.getParameter("tel");
+		String bairro = request.getParameter("bairro");
+		String cep = request.getParameter("cep");
+		String rua = request.getParameter("rua");
+		String numero = request.getParameter("numero");
+		String cidade = request.getParameter("cidade");
+		String estado = request.getParameter("estado");
 //		String tipoMoradia = request.getParameter("tipoMoradia");
 //		String area = request.getParameter("area");
 //		String renda = request.getParameter("renda");
 //		String filhos = request.getParameter("filhos");
 //		String animais = request.getParameter("animais");
-//
-//		Usuario usuario = new Usuario();
+
+		Usuario usuario = new Usuario();
 //		Adotante adotante = new Adotante();
-//		Endereco endereco = new Endereco();
-//		
-//		usuario.setNome(nome);
-//		usuario.setCpfCnpj(cpfCnpj);
-//		usuario.setRg(rg);
-//		usuario.setEmail(email);
-//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//		usuario.setDate(sdf.parse(dtNasc));
+		Endereco endereco = new Endereco();
+		Cidade cidadeObj = new Cidade();
+		
+		usuario.setNome(nome);
+		usuario.setCpfCnpj(cpfCnpj);
+		usuario.setRg(rg);
+		usuario.setEmail(email);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			usuario.setDataNascimento(sdf.parse(dtNasc));
+		} catch (ParseException e) {
+			System.err.println("Erro na conversao da data");
+			e.printStackTrace();
+		}
+		usuario.setTipoAcesso(ConstantsViraLata.TIPO_ACESSO_ADOTANTE);
+		
+		endereco.setTelefoneResidencial(tel);
+		endereco.setBairro(bairro);
+		endereco.setCep(cep);
+		endereco.setRua(rua);
+		endereco.setNumero(Integer.valueOf(numero));
+		
+		cidadeObj.setEstado(estado);
+		cidadeObj.setNome(cidade);
 		
 		return "cadastro";
 	}

@@ -53,21 +53,21 @@
 					<option value="SP">SP</option>
 					<option value="TO">TO</option>
 				</select>
-				<select id="tipoMoradia" name="tipoMoradia">
-					<option value="0">Alvenaria</option>
-					<option value="1">Barracão</option>
-					<option value="2">Oca</option>
-					<option value="3">Palafita</option>
-					<option value="4">Prédio</option>
-					<option value="5">Tenda</option>
-				</select>
-					<input type="text" id="area" name="area" placeholder="Área da Moradia"/></br>
-				</td>
-				<td>
-					<input type="text" id="renda" name="renda" placeholder="Renda Familiar"/></br>
-					<input type="text" id="filhos" name="filhos" placeholder="Número de Filhos"/></br>
-					<input type="text" id="animais" name="animais" placeholder="Número de animais em casa"/></br>
-				</td>
+<!-- 				<select id="tipoMoradia" name="tipoMoradia"> -->
+<!-- 					<option value="0">Alvenaria</option> -->
+<!-- 					<option value="1">Barracão</option> -->
+<!-- 					<option value="2">Oca</option> -->
+<!-- 					<option value="3">Palafita</option> -->
+<!-- 					<option value="4">Prédio</option> -->
+<!-- 					<option value="5">Tenda</option> -->
+<!-- 				</select> -->
+<!-- 					<input type="text" id="area" name="area" placeholder="Área da Moradia"/></br> -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					<input type="text" id="renda" name="renda" placeholder="Renda Familiar"/></br> -->
+<!-- 					<input type="text" id="filhos" name="filhos" placeholder="Número de Filhos"/></br> -->
+<!-- 					<input type="text" id="animais" name="animais" placeholder="Número de animais em casa"/></br> -->
+<!-- 				</td> -->
 		</tr>
 	</table>
 	<input type="submit" value="Realizar Cadastro">
