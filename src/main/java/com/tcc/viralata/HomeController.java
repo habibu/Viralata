@@ -1,10 +1,11 @@
 package com.tcc.viralata;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tcc.viralata.dao.UsuarioDAO;
+import com.tcc.viralata.model.Adotante;
+import com.tcc.viralata.model.Endereco;
 import com.tcc.viralata.model.Usuario;
 import com.tcc.viralata.utils.ConstantsViraLata;
 
@@ -77,10 +80,36 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/cadastro", method = RequestMethod.POST)
-	public String cadastro(String nome, String cpfCnpj, String rg, String email, String dataNasc, String bairro, String cep, String rua, String numero, String cidade, String estado, String tel, String cel) {
+	public String cadastro(HttpServletRequest request) {
 		
-		System.out.println("Ok");
-		
+//		String nome = request.getParameter("nome");
+//		String cpfCnpj = request.getParameter("cpfCnpj");
+//		String rg = request.getParameter("rg");
+//		String email = request.getParameter("email");
+//		String dtNasc = request.getParameter("dtNasc");
+//		String tel = request.getParameter("tel");
+//		String bairro = request.getParameter("bairro");
+//		String cep = request.getParameter("cep");
+//		String rua = request.getParameter("rua");
+//		String numero = request.getParameter("numero");
+//		String cidade = request.getParameter("cidade");
+//		String estado = request.getParameter("estado");
+//		String tipoMoradia = request.getParameter("tipoMoradia");
+//		String area = request.getParameter("area");
+//		String renda = request.getParameter("renda");
+//		String filhos = request.getParameter("filhos");
+//		String animais = request.getParameter("animais");
+//
+//		Usuario usuario = new Usuario();
+//		Adotante adotante = new Adotante();
+//		Endereco endereco = new Endereco();
+//		
+//		usuario.setNome(nome);
+//		usuario.setCpfCnpj(cpfCnpj);
+//		usuario.setRg(rg);
+//		usuario.setEmail(email);
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//		usuario.setDate(sdf.parse(dtNasc));
 		
 		return "cadastro";
 	}
@@ -89,10 +118,10 @@ public class HomeController {
 	public String login(String login, String senha) throws ClassNotFoundException {
 		try {
 			UsuarioDAO usuarioDao = new UsuarioDAO();
-			Usuario usuario = usuarioDao.login(Integer.valueOf(login), senha);
-			if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTpAcesso())){
+			Usuario usuario = usuarioDao.login(login, senha);
+			if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTipoAcesso())){
 				return "homeAdm";
-			}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTpAcesso())){
+			}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTipoAcesso())){
 				return "homeAdo";
 			}
 		}catch(Exception e){
