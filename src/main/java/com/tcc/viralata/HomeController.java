@@ -19,6 +19,7 @@ import com.tcc.viralata.dao.UsuarioDAO;
 import com.tcc.viralata.model.Adotante;
 import com.tcc.viralata.model.Cidade;
 import com.tcc.viralata.model.Endereco;
+import com.tcc.viralata.model.Status;
 import com.tcc.viralata.model.Usuario;
 import com.tcc.viralata.utils.ConstantsViraLata;
 
@@ -29,6 +30,7 @@ import com.tcc.viralata.utils.ConstantsViraLata;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	UsuarioDAO usuarioDao = new UsuarioDAO();
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -89,13 +91,14 @@ public class HomeController {
 		String rg = request.getParameter("rg");
 		String email = request.getParameter("email");
 		String dtNasc = request.getParameter("dtNasc");
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
 		String tel = request.getParameter("tel");
 		String bairro = request.getParameter("bairro");
 		String cep = request.getParameter("cep");
 		String rua = request.getParameter("rua");
 		String numero = request.getParameter("numero");
 		String cidade = request.getParameter("cidade");
-		String estado = request.getParameter("estado");
 //		String tipoMoradia = request.getParameter("tipoMoradia");
 //		String area = request.getParameter("area");
 //		String renda = request.getParameter("renda");
@@ -111,13 +114,15 @@ public class HomeController {
 		usuario.setCpfCnpj(cpfCnpj);
 		usuario.setRg(rg);
 		usuario.setEmail(email);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			usuario.setDataNascimento(sdf.parse(dtNasc));
 		} catch (ParseException e) {
 			System.err.println("Erro na conversao da data");
 			e.printStackTrace();
 		}
+		usuario.setLogin(login);
+		usuario.setSenha(senha);
 		usuario.setTipoAcesso(ConstantsViraLata.TIPO_ACESSO_ADOTANTE);
 		
 		endereco.setTelefoneResidencial(tel);
@@ -126,8 +131,9 @@ public class HomeController {
 		endereco.setRua(rua);
 		endereco.setNumero(Integer.valueOf(numero));
 		
-		cidadeObj.setEstado(estado);
-		cidadeObj.setNome(cidade);
+		cidadeObj.setIdCidade(Integer.valueOf(cidade));
+		
+		Status status = usuarioDao.cadastraUsuario(usuario, endereco, cidadeObj);
 		
 		return "cadastro";
 	}

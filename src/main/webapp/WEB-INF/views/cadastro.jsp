@@ -23,7 +23,10 @@
 				<input type="text" id="cep" name="cep" placeholder="Cep"/></br>
 				<input type="text" id="rua" name="rua" placeholder="Rua"/></br>
 				<input type="text" id="numero" name="numero" placeholder="Número"/></br>
-				<input type="text" id="cidade" name="cidade" placeholder="Cidade"/></br>
+				<select id="cidade" name="cidade">
+					<option value="2">Campo Largo</option>
+					<option value="1">Curitiba</option>
+				</select>
 				<select id="estado" name="estado">
 					<option value="AC">AC</option>
 					<option value="AL">AL</option>
@@ -68,6 +71,10 @@
 <!-- 					<input type="text" id="filhos" name="filhos" placeholder="Número de Filhos"/></br> -->
 <!-- 					<input type="text" id="animais" name="animais" placeholder="Número de animais em casa"/></br> -->
 <!-- 				</td> -->
+				<td>
+					<input type="text" id="login" name="login" placeholder="Login"/></br>
+					<input type="text" id="senha" name="senha" placeholder="Senha"/></br>
+				</td>
 		</tr>
 	</table>
 	<input type="submit" value="Realizar Cadastro">

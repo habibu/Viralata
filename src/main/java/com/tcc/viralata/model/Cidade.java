@@ -2,6 +2,7 @@ package com.tcc.viralata.model;
 
 public class Cidade {
 	
+	private Integer idCidade;
 	private String nome;
 	private String estado;
 	
@@ -17,5 +18,13 @@ public class Cidade {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public Integer getIdCidade() {
+		return idCidade;
+	}
+	public void setIdCidade(Integer idCidade) {
+		this.idCidade = idCidade;
+	}
+	
+	
 
 }
