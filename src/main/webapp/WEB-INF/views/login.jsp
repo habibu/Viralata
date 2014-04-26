@@ -3,6 +3,19 @@
 <html>
 <head>
 	<title>Área de Login</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript">
+function teste(){
+	alert("Teste");
+}
+
+$(document).ready(
+		
+			function() {
+				 teste();
+			}
+		);
+		</script>
 </head>
 <body>
 <h1>
@@ -19,21 +32,9 @@
 	<input type="submit" value="Realizar Cadastro">
 </form>
 </html>
-<html>
 	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<script type="text/javascript" language="javascript" src=".jquery-1.7.2.min.js">
-function teste(){
-	alert("Teste");
-}
-
-$(document).ready(
-		
-			function() {
-				 $("#login").val("Teste");
-				 teste();
-			}
-		);
-</script>
+	
 </body>
+<html>
 </html>
