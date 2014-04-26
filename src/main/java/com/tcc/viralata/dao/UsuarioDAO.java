@@ -27,6 +27,7 @@ public class UsuarioDAO extends ConnectionFactory{
 			preparedStatement.setString(2, senha);
 			rs = preparedStatement.executeQuery();
 			
+			usuarioObject.setStatus(ConstantsViraLata.ERRO_LOGIN);
 			
 			while(rs.next()){
 				usuarioObject.setCpfCnpj(rs.getString("cpfCnpj"));
@@ -36,7 +37,7 @@ public class UsuarioDAO extends ConnectionFactory{
 			}
 			
 		} catch (Exception e) {
-			usuarioObject.setStatus(ConstantsViraLata.ERRO_LOGIN);
+			usuarioObject.setStatus(ConstantsViraLata.ERRO_REDE);
 			e.printStackTrace();
 		} finally {
 			fecharConexao(conexao, pstmt, rs);
@@ -94,7 +95,7 @@ public class UsuarioDAO extends ConnectionFactory{
 			
 			
 		} catch (Exception e) {
-			status.setStatus(ConstantsViraLata.ERRO_CADASTRO);
+			status.setStatus(ConstantsViraLata.ERRO_REDE);
 			String deleteSQL = "delete from \"Usuario\" where login=?";
 			PreparedStatement preparedStatement;
 			try {

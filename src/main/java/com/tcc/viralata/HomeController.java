@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,19 +140,17 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(String login, String senha) throws ClassNotFoundException {
-		try {
-			UsuarioDAO usuarioDao = new UsuarioDAO();
-			Usuario usuario = usuarioDao.login(login, senha);
-			if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTipoAcesso())){
-				return "homeAdm";
-			}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTipoAcesso())){
-				return "homeAdo";
-			}
-		}catch(Exception e){
-			System.out.println("Erro no login");
-			return "login";
+	public String login(String login, String senha, Model model, HttpServletRequest request) throws ClassNotFoundException {
+		UsuarioDAO usuarioDao = new UsuarioDAO();
+		Usuario usuario = usuarioDao.login(login, senha);
+		model.addAttribute("status", usuario.getStatus());
+		if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTipoAcesso())){
+			return "homeAdm";
+		}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTipoAcesso())){
+			return "homeAdo";
 		}
+		HttpSession session = request.getSession();
+		session.setAttribute("status", usuario.getStatus());
 		return "login";
 
 		
