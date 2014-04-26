@@ -92,7 +92,7 @@ public class HomeController {
 		String rg = request.getParameter("rg");
 		String email = request.getParameter("email");
 		String dtNasc = request.getParameter("dtNasc");
-		String login = request.getParameter("login");
+		String usuario = request.getParameter("usuario");
 		String senha = request.getParameter("senha");
 		String tel = request.getParameter("tel");
 		String bairro = request.getParameter("bairro");
@@ -106,25 +106,25 @@ public class HomeController {
 //		String filhos = request.getParameter("filhos");
 //		String animais = request.getParameter("animais");
 
-		Usuario usuario = new Usuario();
+		Usuario usuarioRequest = new Usuario();
 //		Adotante adotante = new Adotante();
 		Endereco endereco = new Endereco();
 		Cidade cidadeObj = new Cidade();
 		
-		usuario.setNome(nome);
-		usuario.setCpfCnpj(cpfCnpj);
-		usuario.setRg(rg);
-		usuario.setEmail(email);
+		usuarioRequest.setNome(nome);
+		usuarioRequest.setCpfCnpj(cpfCnpj);
+		usuarioRequest.setRg(rg);
+		usuarioRequest.setEmail(email);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			usuario.setDataNascimento(sdf.parse(dtNasc));
+			usuarioRequest.setDataNascimento(sdf.parse(dtNasc));
 		} catch (ParseException e) {
 			System.err.println("Erro na conversao da data");
 			e.printStackTrace();
 		}
-		usuario.setLogin(login);
-		usuario.setSenha(senha);
-		usuario.setTipoAcesso(ConstantsViraLata.TIPO_ACESSO_ADOTANTE);
+		usuarioRequest.setLogin(usuario);
+		usuarioRequest.setSenha(senha);
+		usuarioRequest.setTipoAcesso(ConstantsViraLata.TIPO_ACESSO_ADOTANTE);
 		
 		endereco.setTelefoneResidencial(tel);
 		endereco.setBairro(bairro);
@@ -134,23 +134,22 @@ public class HomeController {
 		
 		cidadeObj.setIdCidade(Integer.valueOf(cidade));
 		
-		Status status = usuarioDao.cadastraUsuario(usuario, endereco, cidadeObj);
+		Status status = usuarioDao.cadastraUsuario(usuarioRequest, endereco, cidadeObj);
 		
 		return "cadastro";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(String login, String senha, Model model, HttpServletRequest request) throws ClassNotFoundException {
+	public String login(String usuario, String senha, Model model, HttpServletRequest request) throws ClassNotFoundException {
 		UsuarioDAO usuarioDao = new UsuarioDAO();
-		Usuario usuario = usuarioDao.login(login, senha);
-		model.addAttribute("status", usuario.getStatus());
-		if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuario.getTipoAcesso())){
+		Usuario usuarioRequest = usuarioDao.login(usuario, senha);
+		if (ConstantsViraLata.TIPO_ACESSO_ADMINISTRADOR.equals(usuarioRequest.getTipoAcesso())){
 			return "homeAdm";
-		}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuario.getTipoAcesso())){
+		}else if (ConstantsViraLata.TIPO_ACESSO_ADOTANTE.equals(usuarioRequest.getTipoAcesso())){
 			return "homeAdo";
 		}
-		HttpSession session = request.getSession();
-		session.setAttribute("status", usuario.getStatus());
+		model.addAttribute("statusLogin", usuarioRequest.getStatus());
+		model.addAttribute("usuarioDigitado",usuario);
 		return "login";
 
 		

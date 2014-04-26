@@ -30,6 +30,7 @@ public class UsuarioDAO extends ConnectionFactory{
 			usuarioObject.setStatus(ConstantsViraLata.ERRO_LOGIN);
 			
 			while(rs.next()){
+				usuarioObject.setNome(rs.getString("login"));
 				usuarioObject.setCpfCnpj(rs.getString("cpfCnpj"));
 				usuarioObject.setTipoAcesso(rs.getString("tipoAcesso"));
 				usuarioObject.setDataNascimento(rs.getDate("dataNascimento"));

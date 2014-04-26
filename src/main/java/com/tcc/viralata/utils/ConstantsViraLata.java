@@ -10,4 +10,5 @@ public class ConstantsViraLata {
 	public static final String TIPO_ACESSO_ADMINISTRADOR = "adm";
 	public static final String TIPO_ACESSO_ADOTANTE = "ado";
 	
+	
 }
