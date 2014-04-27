@@ -18,8 +18,6 @@ function confirmCadastro(){
 }	
 
 function valida(){
-	var senha = "${usuario.senha}";
-	
 	if ($("#nome").val()==""){
 		$("#mensagem").text("Campo 'Nome' não preenchido.");
 		return false;
@@ -73,6 +71,10 @@ function verificaCadastro(){
 		$("#mensagem").text("Erro. Por favor, tente novamente.");
 		recuperaDados();
 		return false;
+	}else if (statusCadastro=="sucesso_cadastro"){
+		$("#mensagem").text("Cadastro realizado com sucesso!");
+		$("#mensagem").css('color', 'green');
+		recuperaDados();
 	}
 	return true;
 }
