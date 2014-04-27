@@ -7,6 +7,16 @@
 </head>
 <script type="text/javascript">
 	
+function confirmCadastro(){
+	if (valida()){
+	 if (confirm("Deseja confirmar seu cadastro?")) {
+		 document.forms["cadastro"].submit();
+	   }
+	}else{
+		return false;
+	}
+}	
+
 function valida(){
 	var senha = "${usuario.senha}";
 	
@@ -45,8 +55,6 @@ function valida(){
 		return false;
 	}
 	//Sucesso
-	alert(senha);
-	
 	return true;
 }
 
@@ -72,14 +80,7 @@ function verificaCadastro(){
 $(document).ready(
 		
 		function() {
-			
 			 verificaCadastro();
-		$("#botaoCadastro").click(function () {
-			if (valida()){
-			}else{
-				return false;
-			}
-		});	
 	});
 </script>
 <body>
@@ -88,7 +89,7 @@ $(document).ready(
 </h1>
 <!-- Mensagem de erro -->
 <p id="mensagem" style="color: red;"></p>
-<form action="cadastro" method="post">
+<form id="cadastro" action="cadastro" method="post">
 	<table>
 		<tr>
 			<td>
@@ -157,7 +158,7 @@ $(document).ready(
 				</td>
 		</tr>
 	</table>
-	<input id="botaoCadastro" type="submit" value="Realizar Cadastro">
+	<input id="botaoCadastro" type="button" value="Realizar Cadastro" onclick="confirmCadastro();">
 </form>
 
 </body>

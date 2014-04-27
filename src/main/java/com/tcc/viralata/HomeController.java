@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tcc.viralata.dao.UsuarioDAO;
-import com.tcc.viralata.model.Adotante;
 import com.tcc.viralata.model.Cidade;
 import com.tcc.viralata.model.Endereco;
 import com.tcc.viralata.model.Status;
@@ -122,7 +120,6 @@ public class HomeController {
 		
 		Status status = usuarioDao.cadastraUsuario(usuarioRequest, endereco, cidadeObj);
 		model.addAttribute("statusCadastro", status.getStatus());
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		model.addAttribute("usuario", usuarioRequest);
 		model.addAttribute("endereco",endereco);
 		model.addAttribute("dtNasc",sdf.format(usuarioRequest.getDataNascimento()));
