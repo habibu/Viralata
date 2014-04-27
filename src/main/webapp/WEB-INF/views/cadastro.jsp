@@ -3,7 +3,9 @@
 <html>
 <head>
 	<title>Cadastro</title>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/viralata/resources/js/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="/viralata/resources/js/jquery.maskedinput.js"></script>
+	<script type="text/javascript" src="/viralata/resources/js/cadastro.js"></script>
 </head>
 <script type="text/javascript">
 	
