@@ -10,8 +10,9 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<form action="dadosCadastraisAdo" methodo="post">
+<form action="dadosCadastraisAdo" method="post">
 	<input type="submit" value="Dados Cadastrais">
 </form>
+<P>${usuario.dataNascimento}</P>
 </body>
 </html>

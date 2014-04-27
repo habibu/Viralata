@@ -67,16 +67,8 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/cadastro", method = RequestMethod.GET)
-	public String cadastro(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
+	@RequestMapping(value = "/telaCadastroUsuario", method = RequestMethod.POST)
+	public String telaCadastroUsuario(Locale locale, Model model) {
 		
 		return "cadastro";
 	}
@@ -85,14 +77,14 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/cadastro", method = RequestMethod.POST)
-	public String cadastro(HttpServletRequest request) {
+	public String cadastro(HttpServletRequest request, Model model) {
 		
 		String nome = request.getParameter("nome");
 		String cpfCnpj = request.getParameter("cpfCnpj");
 		String rg = request.getParameter("rg");
 		String email = request.getParameter("email");
 		String dtNasc = request.getParameter("dtNasc");
-		String usuario = request.getParameter("usuario");
+		String usuario = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		String tel = request.getParameter("tel");
 		String bairro = request.getParameter("bairro");
@@ -100,14 +92,8 @@ public class HomeController {
 		String rua = request.getParameter("rua");
 		String numero = request.getParameter("numero");
 		String cidade = request.getParameter("cidade");
-//		String tipoMoradia = request.getParameter("tipoMoradia");
-//		String area = request.getParameter("area");
-//		String renda = request.getParameter("renda");
-//		String filhos = request.getParameter("filhos");
-//		String animais = request.getParameter("animais");
 
 		Usuario usuarioRequest = new Usuario();
-//		Adotante adotante = new Adotante();
 		Endereco endereco = new Endereco();
 		Cidade cidadeObj = new Cidade();
 		
@@ -115,7 +101,7 @@ public class HomeController {
 		usuarioRequest.setCpfCnpj(cpfCnpj);
 		usuarioRequest.setRg(rg);
 		usuarioRequest.setEmail(email);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			usuarioRequest.setDataNascimento(sdf.parse(dtNasc));
 		} catch (ParseException e) {
@@ -135,6 +121,11 @@ public class HomeController {
 		cidadeObj.setIdCidade(Integer.valueOf(cidade));
 		
 		Status status = usuarioDao.cadastraUsuario(usuarioRequest, endereco, cidadeObj);
+		model.addAttribute("statusCadastro", status.getStatus());
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		model.addAttribute("usuario", usuarioRequest);
+		model.addAttribute("endereco",endereco);
+		model.addAttribute("dtNasc",sdf.format(usuarioRequest.getDataNascimento()));
 		
 		return "cadastro";
 	}

@@ -62,7 +62,7 @@ $(document).ready(
 	
 	<input type="submit" id="botaologin" name="botaologin" value="Enviar">
 </form>
-<form action="cadastro" method="post">
+<form action="telaCadastroUsuario" method="post">
 	<input type="submit" value="Realizar Cadastro">
 </form>
 </html>

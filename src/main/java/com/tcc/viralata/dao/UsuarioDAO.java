@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.postgresql.util.PSQLException;
 
 import com.tcc.viralata.model.Cidade;
 import com.tcc.viralata.model.Endereco;
@@ -95,7 +96,27 @@ public class UsuarioDAO extends ConnectionFactory{
 			status.setStatus(ConstantsViraLata.SUCESSO_CADASTRO);
 			
 			
-		} catch (Exception e) {
+		}catch (PSQLException e){
+			if (ConstantsViraLata.UNIQUE_VIOLATION.equals(e.getSQLState())){
+				String mensagemErro = e.getMessage();
+				if (mensagemErro.contains("cpfcnpj")){
+					status.setStatus(ConstantsViraLata.USUARIO_JA_EXISTENTE);
+				}else{
+					status.setStatus(ConstantsViraLata.LOGIN_JA_EXISTENTE);
+				}
+			}else{
+				String deleteSQL = "delete from \"Usuario\" where login=?";
+				PreparedStatement preparedStatement;
+				try {
+					preparedStatement = conexao.prepareStatement(deleteSQL);
+					preparedStatement.setString(1, usuario.getLogin());
+					preparedStatement.executeUpdate();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			e.printStackTrace();
+		}catch (Exception e) {
 			status.setStatus(ConstantsViraLata.ERRO_REDE);
 			String deleteSQL = "delete from \"Usuario\" where login=?";
 			PreparedStatement preparedStatement;

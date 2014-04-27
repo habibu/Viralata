@@ -3,27 +3,107 @@
 <html>
 <head>
 	<title>Cadastro</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+	
+function valida(){
+	var senha = "${usuario.senha}";
+	
+	if ($("#nome").val()==""){
+		$("#mensagem").text("Campo 'Nome' não preenchido.");
+		return false;
+	}else if ($("#cpfCnpj").val()==""){
+		$("#mensagem").text("Campo 'Cpf/Cnpj' não preenchido.");
+		return false;
+	}else if ($("#email").val()==""){
+		$("#mensagem").text("Campo 'E-Mail' não preenchido.");
+		return false;
+	}else if ($("#dtNasc").val()==""){
+		$("#mensagem").text("Verifique o preenchimento do campo 'Data de Nascimento'.");
+		return false;
+	}else if ($("#tel").val()==""){
+		$("#mensagem").text("Campo 'Telefone' não preenchido.");
+		return false;
+	}else if ($("#bairro").val()==""){
+		$("#mensagem").text("Campo 'Bairro' não preenchido.");
+		return false;
+	}else if ($("#cep").val()==""){
+		$("#mensagem").text("Campo 'Cep' não preenchido.");
+		return false;
+	}else if ($("#rua").val()==""){
+		$("#mensagem").text("Campo 'Rua' não preenchido.");
+		return false;
+	}else if ($("#numero").val()==""){
+		$("#mensagem").text("Campo 'Número' não preenchido.");
+		return false;
+	}else if ($("#login").val()==""){
+		$("#mensagem").text("Campo 'Login' não preenchido.");
+		return false;
+	}else if ($("#senha").val()==""){
+		$("#mensagem").text("Campo 'Senha' não preenchido.");
+		return false;
+	}
+	//Sucesso
+	alert(senha);
+	
+	return true;
+}
+
+function verificaCadastro(){
+	var statusCadastro = "${statusCadastro}";
+	
+	if (statusCadastro=="login_ja_existente"){
+		$("#mensagem").text("Login já existente. Por favor, informe um novo login.");
+		recuperaDados();
+		return false;
+	}else if (statusCadastro=="usuario_ja_existente"){
+		$("#mensagem").text("Usuário já existente no sistema.");
+		recuperaDados();
+		return false;
+	}else if (statusCadastro=="erro_rede"){
+		$("#mensagem").text("Erro. Por favor, tente novamente.");
+		recuperaDados();
+		return false;
+	}
+	return true;
+}
+
+$(document).ready(
+		
+		function() {
+			
+			 verificaCadastro();
+		$("#botaoCadastro").click(function () {
+			if (valida()){
+			}else{
+				return false;
+			}
+		});	
+	});
+</script>
 <body>
 <h1>
 	Cadastro 
 </h1>
+<!-- Mensagem de erro -->
+<p id="mensagem" style="color: red;"></p>
 <form action="cadastro" method="post">
 	<table>
 		<tr>
 			<td>
-				<input type="text" id="nome" name="nome" placeholder="Nome Completo"/></br>
-				<input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Cpf/Cnpj"/></br>
-				<input type="text" id="rg" name="rg" placeholder="RG"/></br>
-				<input type="text" id="email" name="email" placeholder="E-mail"/></br>
-				<input type="date" id="dtNasc" name="dtNasc" placeholder="Data de Nascimento"/></br>
-				<input type="text" id="tel" name="tel" placeholder="Telefone"/></br>
+				<input type="text" id="nome" name="nome" placeholder="Nome Completo" value="${usuario.nome}"/></br>
+				<input type="text" id="cpfCnpj" name="cpfCnpj" placeholder="Cpf/Cnpj" value="${usuario.cpfCnpj}"/></br>
+				<input type="text" id="rg" name="rg" placeholder="RG" value="${usuario.rg}"/></br>
+				<input type="text" id="email" name="email" placeholder="E-mail" value="${usuario.email}"/></br>
+				<input type="date" id="dtNasc" name="dtNasc" placeholder="Data de Nascimento" value="${dtNasc}"/></br>
+				<input type="text" id="tel" name="tel" placeholder="Telefone" value="${endereco.telefoneResidencial}"/></br>
 				<td>
-				<input type="text" id="bairro" name="bairro" placeholder="Bairro"/></br>
-				<input type="text" id="cep" name="cep" placeholder="Cep"/></br>
-				<input type="text" id="rua" name="rua" placeholder="Rua"/></br>
-				<input type="text" id="numero" name="numero" placeholder="Número"/></br>
-				<select id="cidade" name="cidade">
+				<input type="text" id="bairro" name="bairro" placeholder="Bairro" value="${endereco.bairro}"/></br>
+				<input type="text" id="cep" name="cep" placeholder="Cep" value="${endereco.cep}"/></br>
+				<input type="text" id="rua" name="rua" placeholder="Rua" value="${endereco.rua}"/></br>
+				<input type="text" id="numero" name="numero" placeholder="Número" value="${endereco.numero}"/></br>
+				<select id="cidade" name="cidade" >
 					<option value="2">Campo Largo</option>
 					<option value="1">Curitiba</option>
 				</select>
@@ -72,12 +152,12 @@
 <!-- 					<input type="text" id="animais" name="animais" placeholder="Número de animais em casa"/></br> -->
 <!-- 				</td> -->
 				<td>
-					<input type="text" id="login" name="login" placeholder="Login"/></br>
-					<input type="text" id="senha" name="senha" placeholder="Senha"/></br>
+					<input type="text" id="login" name="login" placeholder="Login" value="${usuario.login}"/>
+					<input type="password" id="senha" name="senha" placeholder="Senha" value="${usuario.senha}"/>
 				</td>
 		</tr>
 	</table>
-	<input type="submit" value="Realizar Cadastro">
+	<input id="botaoCadastro" type="submit" value="Realizar Cadastro">
 </form>
 
 </body>
