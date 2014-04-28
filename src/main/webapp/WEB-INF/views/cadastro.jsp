@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="/viralata/resources/js/jquery.maskedinput.js"></script>
 	<script type="text/javascript" src="/viralata/resources/js/cadastro.js"></script>
 	<link rel="stylesheet" href="/viralata/resources/css/bootstrap.min.css"></link>
+	<!-- <link rel="stylesheet" href="/viralata/resources/css/cadastro.css"></link> -->
 </head>
 <body>
 <h1>
@@ -15,7 +16,8 @@
 </h1>
 <!-- Mensagem de erro -->
 <p id="mensagem" style="color: red;"></p>
-<form id="cadastro" action="cadastro" method="post">
+
+<form id="cadastro" class="formulario" action="cadastro" method="post">
 	<table>
 		<tr>
 			<td>
@@ -84,8 +86,8 @@
 				</td>
 		</tr>
 	</table>
-	<button id="botaoCadastro" class="btn btn-info" onclick="confirmCadastro();">Realizar Cadastro</button>
 </form>
+	<button id="botaoCadastro" class="btn btn-info" onclick="confirmCadastro();">Realizar Cadastro</button>
 
 </body>
 </html>
